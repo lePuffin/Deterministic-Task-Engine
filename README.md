@@ -34,11 +34,11 @@ Complete API documentation is generated using Doxygen. To view the documentation
 
 1. **Generate the documentation** (if not already generated):
    ```bash
-   doxygen .\doc\Doxyfile
+   doxygen .\docs\Doxyfile
    ```
 
 2. **View the HTML documentation**:
-   Open `doc/DoxygenOutput/html/index.html` in your web browser
+   Open `docs/DoxygenOutput/html/index.html` in your web browser
 
 The generated documentation includes:
 - Class and function references
