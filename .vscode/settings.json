@@ -1,0 +1,18 @@
+{
+    "C_Cpp.clang_format_style": "file:${workspaceFolder}/doc/.clang-format",
+    "C_Cpp.clang_format_sortIncludes": true,
+    "C_Cpp.formatting": "clangFormat",
+    "editor.formatOnSave": true,
+    "C_Cpp.autocompleteAddParentheses": true,
+    "C_Cpp.inlayHints.autoDeclarationTypes.enabled": true,
+    "C_Cpp.inlayHints.autoDeclarationTypes.showOnLeft": true,
+    "C_Cpp.inlayHints.parameterNames.enabled": true,
+    "C_Cpp.inlayHints.parameterNames.suppressWhenArgumentContainsName": false,
+    "C_Cpp.inlayHints.referenceOperator.enabled": true,
+    "C_Cpp.inlayHints.referenceOperator.showSpace": true,
+    "C_Cpp.vcFormat.indent.braces": false,
+    "cpputestTestAdapter.testExecutable": "${workspaceFolder}/build/tests/UnitTests.exe",
+    "cpputestTestAdapter.testLocationFetchMode": "disabled",
+    "editor.tabCompletion": "on",
+    "cmake.ctest.testExplorerIntegrationEnabled": false,
+}

@@ -1,0 +1,54 @@
+@startuml
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+
+title Deterministic Task Engine - Core Design
+
+package "Execution Layer" {
+    class ExecutionPolicy {
+        - script : vector<ExecutionResult>
+        - index : size_t
+        + execute() : ExecutionResult
+    }
+
+    enum ExecutionResult {
+        SUCCESS
+        FAILURE
+        TIMEOUT
+    }
+}
+
+package "Task Runtime" {
+    enum TaskState {
+        CREATED
+        RUNNING
+        SUCCESS
+        FAILED
+        ABORTED
+    }
+
+    class Task {
+        - id : string
+        - state : TaskState
+        - retries : int
+        - maxRetries : int
+        - policy : ExecutionPolicy
+        --
+        + run() : bool
+        + canRetry() : bool
+    }
+
+    class TaskManager {
+        - queue : Task[]
+        --
+        + addTask(task)
+        + execute()
+    }
+}
+
+Task --> ExecutionPolicy : delegates\nexecution
+TaskManager --> Task : controls\nlifecycle
+Task --> TaskState : updates
+ExecutionPolicy --> ExecutionResult : returns
+
+@enduml

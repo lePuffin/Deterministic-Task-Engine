@@ -1,0 +1,16 @@
+@startuml
+title Task State Machine
+
+[*] --> CREATED
+CREATED --> RUNNING
+
+RUNNING --> SUCCESS : ExecutionResult::SUCCESS
+RUNNING --> FAILED  : ExecutionResult::FAILURE | TIMEOUT
+
+FAILED --> RUNNING : canRetry()
+FAILED --> ABORTED : maxRetries reached
+
+SUCCESS --> [*]
+ABORTED --> [*]
+
+@enduml

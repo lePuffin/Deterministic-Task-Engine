@@ -1,0 +1,90 @@
+@startuml
+skinparam style strictuml
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+
+title Deterministic Task Engine — Repository Overview
+
+' =========================
+' Repository layout
+' =========================
+package "deterministic-task-engine" {
+
+    package "src" {
+
+        class TaskManager {
+            - queue : Task[]
+            --
+            + addTask(task)
+            + execute()
+        }
+
+        class Task {
+            - id : string
+            - state : TaskState
+            - retries : int
+            - maxRetries : int
+            - policy : ExecutionPolicy
+            --
+            + run() : bool
+            + canRetry() : bool
+        }
+
+        enum TaskState {
+            CREATED
+            RUNNING
+            SUCCESS
+            FAILED
+            ABORTED
+        }
+
+        interface ExecutionPolicy {
+            + execute() : ExecutionResult
+        }
+
+        enum ExecutionResult {
+            SUCCESS
+            FAILURE
+            TIMEOUT
+        }
+
+        class ScriptedPolicy {
+            - script : vector<ExecutionResult>
+            - index : size_t
+            + execute() : ExecutionResult
+        }
+
+        class AlwaysFailPolicy {
+            + execute() : ExecutionResult
+        }
+    }
+
+    ' package "docs" {
+    '     artifact architecture.puml
+    '     artifact state_machine.puml
+    ' }
+
+    package "tests" {
+        class TaskTests
+        class PolicyTests
+    }
+}
+
+' =========================
+' Relationships
+' =========================
+
+TaskManager --> Task : manages lifecycle
+Task --> ExecutionPolicy : delegates execution
+ExecutionPolicy --> ExecutionResult : returns
+
+ExecutionPolicy <|.. ScriptedPolicy
+ExecutionPolicy <|.. AlwaysFailPolicy
+
+Task --> TaskState : updates state
+
+TaskTests --> Task
+TaskTests --> ScriptedPolicy
+PolicyTests --> ExecutionPolicy
+
+@enduml
